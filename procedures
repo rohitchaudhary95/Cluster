@@ -1,0 +1,35 @@
+/* procedure to make changes in signup table */
+
+
+delimiter //
+create procedure alpha (in x varchar(40))
+declare var int;
+select max(aid) 
+into var 
+from about;
+update signup
+set aid=var
+where username=x;
+end//
+delimiter;
+
+
+
+/* cursor for search table */
+
+
+DELIMITER //
+Create procedure cur1(in var varchar(40))
+begin
+declare x varchar(40);
+declare exit_loop int;
+DECLARE curs CURSOR FOR
+SELECT username FROM signup WHERE username LIKE x;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET exit_loop = 1;
+OPEN curs;
+FETCH curs INTO x;
+select x;
+CLOSE curs;
+END //
+delimiter ;
+
